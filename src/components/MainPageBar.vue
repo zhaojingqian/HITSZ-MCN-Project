@@ -1,15 +1,30 @@
 <template>
-  <el-button type="primary" @click="handleClick1">DATA 1</el-button>
-  <el-button @click="handleClick2">DATA 2</el-button>
-
+  <el-dropdown @command="handleCommand">
+    <el-button type="primary">
+      {{ currentJson }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+    </el-button>
+    <template #dropdown>
+      <el-dropdown-menu>
+        <!--循环 dataList -->
+        <el-dropdown-item v-for="data in dataList" :key="data" :command="data">{{
+          data
+        }}</el-dropdown-item>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+  <barUpload />
   <el-button type="primary" @click="switchGraphLayout">SWITCH</el-button>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
+import barUpload from './BarUpload.vue'
+import { ArrowDown } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { useDataStore } from '../stores/data.js'
-
+const currentJson = ref('Selecte Data')
 const dataStore = useDataStore()
+const dataList = computed(() => dataStore.getDataList())
 
 const passDataJson = async (data_path) => {
   await axios
@@ -22,13 +37,10 @@ const passDataJson = async (data_path) => {
     })
 }
 
-const handleClick1 = () => {
-  dataStore.setDataPath('./data/test_data.json')
-  passDataJson(dataStore.getDataPath())
-}
-
-const handleClick2 = () => {
-  dataStore.setDataPath('./data/cora_data.json')
+const handleCommand = (data_name) => {
+  currentJson.value = data_name
+  const dataPath = 'database/data/' + data_name + '.json'
+  dataStore.setDataPath(dataPath)
   passDataJson(dataStore.getDataPath())
 }
 
@@ -39,10 +51,6 @@ const switchGraphLayout = () => {
   } else {
     dataStore.setOptionParams({ layout: 'force', curveness: 0 })
   }
-}
-
-const storeData = (file) => {
-  console.log(file)
 }
 </script>
 

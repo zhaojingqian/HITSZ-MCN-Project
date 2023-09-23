@@ -57,25 +57,6 @@ const updateOption = (dataJson) => {
     ]
   }
 }
-// const option = ref({
-//     legend: [{data: dataJson.categories.map(a => a.name)}],
-//     series: [
-//         {
-//             type: 'graph',
-//             layout: 'force',
-//             label: { position: 'right' },
-//             draggable: true,
-//             data: dataJson.nodes,
-//             links: dataJson.links,
-//             categories: dataJson.categories,
-//             roam: true,
-//             force: {
-
-//                 repulsion: 200,
-//             }
-//         }
-//     ]
-// })
 </script>
 
 <style></style>

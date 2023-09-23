@@ -1,12 +1,14 @@
 <template>
   <el-carousel :autoplay="false" direction="vertical" type="card">
-    <el-carousel-item class="mainpage_box" v-for="item in 6" :key="item">
+    <el-carousel-item class="mainpage_box" v-for="item in 4" :key="item">
       <h3 class="mainpage_box" text="2xl" justify="center">{{ item }}</h3>
     </el-carousel-item>
   </el-carousel>
 </template>
 
-<script setup></script>
+<script setup>
+
+</script>
 
 <style>
 .mainpage_box {

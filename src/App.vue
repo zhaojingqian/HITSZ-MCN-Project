@@ -16,11 +16,29 @@
 </template>
 
 <script setup>
-// components
 import mainHeader from './components/MainPageHeader.vue'
 import mainBar from './components/MainPageBar.vue'
 import mainGraph from './charts/ForceLayoutGraph.vue'
 import mainSlide from './components/MainPageSlide.vue'
+
+import { onMounted } from 'vue'
+import axios from 'axios'
+import { useDataStore } from './stores/data.js'
+const dataStore = useDataStore()
+
+const getInitDataList = async () => {
+  await axios
+    .get('http://127.0.0.1:8280/get_data_list')
+    .then((res) => {
+      dataStore.resetDataList(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+onMounted(() => {
+  getInitDataList()
+})
 </script>
 
 <style>
@@ -30,6 +48,7 @@ import mainSlide from './components/MainPageSlide.vue'
   justify-content: center;
   /* margin-left: 3%; */
   gap: 20px;
+  padding: 10px;
 }
 
 .mainpage_bar {
