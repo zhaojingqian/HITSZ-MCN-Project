@@ -6,12 +6,9 @@
   </el-carousel>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style>
-
 .mainpage_box {
   width: 100%;
   height: 100%;

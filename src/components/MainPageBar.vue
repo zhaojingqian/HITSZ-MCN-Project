@@ -1,25 +1,11 @@
 <template>
   <el-button type="primary" @click="handleClick1">DATA 1</el-button>
   <el-button @click="handleClick2">DATA 2</el-button>
-  <el-upload
-    v-model:file-list="fileList"
-    class="upload-demo"
-    :action="storeData"
-    multiple
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :limit="1"
-    :on-exceed="handleExceed"
-  >
-    <el-button type="primary">Click to upload</el-button>
-  </el-upload>
+
   <el-button type="primary" @click="switchGraphLayout">SWITCH</el-button>
 </template>
 
 <script setup>
-// import { ref } from 'vue'
-
 import axios from 'axios'
 import { useDataStore } from '../stores/data.js'
 

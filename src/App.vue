@@ -1,24 +1,3 @@
-<script setup>
-// components
-import mainHeader from './components/MainPageHeader.vue'
-import mainBar from './components/MainPageBar.vue'
-import mainGraph from './charts/ForceLayoutGraph.vue'
-import mainSlide from './components/MainPageSlide.vue'
-// references
-
-// import lodash from 'lodash'
-// import { ref, onMounted, onBeforeUnmount } from 'vue'
-
-// const debouncedHandleWindowResize = lodash.debounce(, 10)
-
-// onMounted(() => {
-//   window.addEventListener('resize', debouncedHandleWindowResize);
-// })
-// onBeforeUnmount(() => {
-//   window.removeEventListener('resize', debouncedHandleWindowResize);
-// })
-</script>
-
 <template>
   <el-container ref="mainpage_container" class="mainpage_container">
     <el-header class="mainpage_header">
@@ -29,12 +8,20 @@ import mainSlide from './components/MainPageSlide.vue'
         <mainBar />
       </div>
       <div class="mainpage_info">
-        <mainSlide class="mainpage_slide"/>
+        <mainSlide class="mainpage_slide" />
         <mainGraph class="mainpage_forced_graph" />
       </div>
     </el-main>
   </el-container>
 </template>
+
+<script setup>
+// components
+import mainHeader from './components/MainPageHeader.vue'
+import mainBar from './components/MainPageBar.vue'
+import mainGraph from './charts/ForceLayoutGraph.vue'
+import mainSlide from './components/MainPageSlide.vue'
+</script>
 
 <style>
 .mainpage_main {

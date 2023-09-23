@@ -6,7 +6,7 @@
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="0"> LOGO </el-menu-item>
+    <el-menu-item index="0" @click="testPing"> LOGO </el-menu-item>
     <div class="mainpage_header_menu_flex_grow"></div>
     <el-menu-item index="1"> Home </el-menu-item>
     <el-menu-item index="2"> About </el-menu-item>
@@ -16,10 +16,21 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import axios from 'axios'
 const activeIndex = ref('1')
 const handleSelect = (index) => {
   activeIndex.value = index
+}
+
+const testPing = async () => {
+  await axios
+    .get('http://127.0.0.1:8280/test')
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 </script>
 
