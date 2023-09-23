@@ -2,31 +2,43 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useDataStore = defineStore('data', () => {
-    const dataPath = ref('')
-    const dataJson = ref({})
+  const dataPath = ref('')
+  const setDataPath = (path) => {
+    dataPath.value = path
+  }
+  const getDataPath = () => {
+    return dataPath.value
+  }
 
-    const setDataPath = (path) => {
-        dataPath.value = path
-    }
+  const dataJson = ref({})
+  const setDataJson = (data) => {
+    dataJson.value = data
+  }
+  const getDataJson = () => {
+    return dataJson.value
+  }
 
-    const getDataPath = () => {
-        return dataPath.value
-    }
+  const optionParams = ref({
+    layout: 'force',
+    curveness: 0
+  })
+  const setOptionParams = (params) => {
+    optionParams.value = params
+  }
+  const getOptionParams = () => {
+    return optionParams.value
+  }
 
-    const setDataJson = (data) => {
-        dataJson.value = data
-    }
-    const getDataJson = () => {
-        return dataJson.value
-    }
+  return {
+    dataPath,
+    dataJson,
+    optionParams,
 
-    return {
-        dataPath,
-        dataJson,
-        
-        setDataPath,
-        getDataPath,
-        setDataJson,
-        getDataJson,
-    }
+    setDataPath,
+    getDataPath,
+    setDataJson,
+    getDataJson,
+    setOptionParams,
+    getOptionParams
+  }
 })
