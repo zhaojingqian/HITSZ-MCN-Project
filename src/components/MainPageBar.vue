@@ -1,48 +1,18 @@
 <template>
-  <el-dropdown @command="handleCommand">
-    <el-button type="primary">
-      {{ currentJson }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
-    </el-button>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <!--循环 dataList -->
-        <el-dropdown-item v-for="data in dataList" :key="data" :command="data">{{
-          data
-        }}</el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <barSelect />
   <barUpload />
   <el-button type="primary" @click="switchGraphLayout">SWITCH</el-button>
+  <el-button type="danger" @click="deleteDataJsonFromList">DELETE</el-button>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+
 import barUpload from './BarUpload.vue'
-import { ArrowDown } from '@element-plus/icons-vue'
-import axios from 'axios'
+import barSelect from './BarSelect.vue'
+
 import { useDataStore } from '../stores/data.js'
-const currentJson = ref('Selecte Data')
+import { ElMessageBox } from 'element-plus'
 const dataStore = useDataStore()
-const dataList = computed(() => dataStore.getDataList())
-
-const passDataJson = async (data_path) => {
-  await axios
-    .get(data_path)
-    .then((res) => {
-      dataStore.setDataJson(res.data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const handleCommand = (data_name) => {
-  currentJson.value = data_name
-  const dataPath = 'database/data/' + data_name + '.json'
-  dataStore.setDataPath(dataPath)
-  passDataJson(dataStore.getDataPath())
-}
 
 const switchGraphLayout = () => {
   const oldOptionParam = dataStore.getOptionParams()
@@ -51,6 +21,23 @@ const switchGraphLayout = () => {
   } else {
     dataStore.setOptionParams({ layout: 'force', curveness: 0 })
   }
+}
+
+const deleteDataJsonFromList = () => {
+  const currentDataPath = dataStore.getDataPath()
+  const currentDataName = currentDataPath.split('/')[2].split('.')[0]
+  ElMessageBox.confirm('Are you sure to delete this data?', 'Warning', {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    type: 'warning'
+  })
+    .then(() => {
+      dataStore.delDataList(currentDataName)
+      dataStore.setDataPath('')
+      dataStore.setDataJson({})
+    })
+    .catch(() => {})
+  console.log(dataStore.getDataList())
 }
 </script>
 

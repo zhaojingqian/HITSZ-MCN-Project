@@ -43,8 +43,15 @@ export const useDataStore = defineStore('data', () => {
   const addDataList = (data) => {
     dataList.value.push(data)
   }
-  const delDataList = (index) => {
-    dataList.value.splice(index, 1)
+  const delDataList = (dataName) => {
+    // dataList.value.splice(index, 1)
+    dataList.value.forEach((item, i) => {
+      if (item === dataName) {
+        dataList.value.splice(i, 1)
+        return true
+      }
+    })
+    return false
   }
   const getDataList = () => {
     return dataList.value

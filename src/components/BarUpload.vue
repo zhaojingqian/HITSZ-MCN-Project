@@ -10,7 +10,7 @@
     :on-success="handleSuccess"
     :limit="1"
   >
-    <el-button type="primary">Click to upload</el-button>
+    <el-button type="success">UPLOAD</el-button>
   </el-upload>
 </template>
 

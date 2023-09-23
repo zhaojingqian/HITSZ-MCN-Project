@@ -33,7 +33,7 @@ def save_file():
     file_name = file.filename
     file.save(os.path.join(ROOT_PATH, file_name))
     return "success"
-    
+
 
 if __name__ == '__main__':
     app.run(port=8280, debug=True)
