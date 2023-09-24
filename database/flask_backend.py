@@ -2,11 +2,25 @@ from flask import Flask
 from flask import request, make_response
 from flask_cors import CORS
 import os
+import json
+import networkx as nx
+from collections import Counter
+
+
+ROOT_PATH = 'database/data'
+
+def readJson(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    return data
+
+def writeTxt(file_path, edges_list):
+    with open(os.path.join(ROOT_PATH, file_path.split('.')[0] + '.txt'), 'w', encoding='utf-8') as f:
+        for edge in edges_list:
+            f.write(str(edge[0]) + ' ' + str(edge[1]) + '\n')
 
 app = Flask(__name__)
 CORS(app)
-
-ROOT_PATH = 'database/data'
 
 @app.route('/test', methods=['GET'])
 def test_ping():
@@ -18,7 +32,9 @@ def get_data_list():
     file_names = []
     for root, dirs, files in os.walk(ROOT_PATH):
         for file in files:
-            file_names.append(file.split('.')[0])
+            if file.endswith('.json'):
+                file_names.append(file.split('.')[0])
+    file_names = list(set(file_names))
     return file_names
 
 @app.route('/upload', methods=['POST', 'OPTIONS'])
@@ -32,8 +48,70 @@ def save_file():
     file = request.files['file']
     file_name = file.filename
     file.save(os.path.join(ROOT_PATH, file_name))
+    
+    # data process
+    pre_data = readJson(os.path.join(ROOT_PATH, file_name))
+    try:
+        graph = []
+        edges_list = pre_data['links']
+        for edge in edges_list:
+            source = edge['source']
+            target = edge['target']
+            graph.append([source, target])
+        print(len(graph))
+        print(graph[0])
+        writeTxt(file_name, graph)
+    except Exception as e:
+        print(e)
+        return "error"
     return "success"
 
+@app.route('/algorithm', methods=['GET'])
+def cal_degree():
+    data_name = request.args.get('data_name')
+    data_path = os.path.join(ROOT_PATH, data_name + '.txt')
+    graph = nx.read_edgelist(data_path, delimiter=' ', nodetype=int)
+    
+    features_set = {}
+    
+    # 计算degree
+    degrees = dict(graph.degree())
+    degree_counts = Counter(degrees.values())
+    sorted_degree_counts = dict(sorted(degree_counts.items()))
+    degrees_list = list(sorted_degree_counts.keys())
+    counts_list = list(sorted_degree_counts.values())
+    integrated_dict = {
+        'degree': degrees_list,
+        'count': counts_list
+    }
+    features_set['degree'] = integrated_dict
+    
+    # 计算coreness
+    coreness = nx.core_number(graph)
+    coreness_counts = Counter(coreness.values())
+    sorted_coreness_counts = dict(sorted(coreness_counts.items()))
+    coreness_list = list(sorted_coreness_counts.keys())
+    counts_list = list(sorted_coreness_counts.values())
+    integrated_dict = {
+        'coreness': coreness_list,
+        'count': counts_list
+    }
+    features_set['coreness'] = integrated_dict
+    
+    # 计算triange
+    triange = nx.triangles(graph)
+    triange_counts = Counter(triange.values())
+    sorted_triange_counts = dict(sorted(triange_counts.items()))
+    triange_list = list(sorted_triange_counts.keys())
+    counts_list = list(sorted_triange_counts.values())
+    integrated_dict = {
+        'triange': triange_list,
+        'count': counts_list
+    }
+    features_set['triange'] = integrated_dict
+    print(features_set)
+    return features_set
+    
 
 if __name__ == '__main__':
     app.run(port=8280, debug=True)

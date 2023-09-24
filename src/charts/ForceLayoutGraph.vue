@@ -34,6 +34,11 @@ const updateOption = (dataJson) => {
   if (isEmpty(dataJson)) {
     return {}
   }
+
+  dataJson.nodes.forEach((item) => {
+    item.symbolSize = optionParams.value.symbolSize
+  })
+
   return {
     legend: [{ data: dataJson.categories.map((a) => a.name) }],
     series: [

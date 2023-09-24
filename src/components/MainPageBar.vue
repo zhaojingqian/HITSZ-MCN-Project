@@ -17,15 +17,16 @@ const dataStore = useDataStore()
 const switchGraphLayout = () => {
   const oldOptionParam = dataStore.getOptionParams()
   if (oldOptionParam.layout === 'force') {
-    dataStore.setOptionParams({ layout: 'circular', curveness: 0.3 })
+    dataStore.setOptionParams({ layout: 'circular', curveness: 0.3, symbolSize: 5 })
   } else {
-    dataStore.setOptionParams({ layout: 'force', curveness: 0 })
+    dataStore.setOptionParams({ layout: 'force', curveness: 0, symbolSize: 10 })
   }
 }
 
 const deleteDataJsonFromList = () => {
-  const currentDataPath = dataStore.getDataPath()
-  const currentDataName = currentDataPath.split('/')[2].split('.')[0]
+  // const currentDataPath = dataStore.getDataPath()
+  // const currentDataName = currentDataPath.split('/')[2].split('.')[0]
+  const currentDataName = dataStore.getCurrentData()
   ElMessageBox.confirm('Are you sure to delete this data?', 'Warning', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',

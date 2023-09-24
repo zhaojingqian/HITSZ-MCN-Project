@@ -8,6 +8,7 @@
     :show-file-list="false"
     :before-upload="handleBeforeUpload"
     :on-success="handleSuccess"
+    :on-error="handleError"
     :limit="1"
   >
     <el-button type="success">UPLOAD</el-button>
@@ -39,6 +40,12 @@ const handleSuccess = (_, file) => {
   }
   fileList.value = []
 }
+
+const handleError = (_, file) => {
+  const data = file.name.split('.')[0]
+  ElMessage.error(`${data} 上传失败!请检查文件内容及格式是否正确!`)
+}
+
 </script>
 
 <style></style>
