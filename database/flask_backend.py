@@ -108,7 +108,25 @@ def cal_degree():
         'triange': triange_list,
         'count': counts_list
     }
-    features_set['triange'] = integrated_dict
+    features_set['triangle'] = integrated_dict
+
+    # 计算所有节点的最短路径
+    shortest_path = dict(nx.all_pairs_shortest_path_length(graph))
+    shortest_path_list = []
+    for key in shortest_path.keys():
+        for key2 in shortest_path[key].keys():
+            if key == key2:
+                continue
+            shortest_path_list.append(shortest_path[key][key2])
+    shortest_path_counts = Counter(shortest_path_list)
+    sorted_shortest_path_counts = dict(sorted(shortest_path_counts.items()))
+    shortest_path_list = list(sorted_shortest_path_counts.keys())
+    counts_list = list(sorted_shortest_path_counts.values())
+    integrated_dict = {
+        'shortest_path': shortest_path_list,
+        'count': counts_list
+    }
+    features_set['shortest_path'] = integrated_dict
     print(features_set)
     return features_set
     

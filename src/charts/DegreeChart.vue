@@ -20,7 +20,6 @@ const dataStore = useDataStore()
 const degreeData = computed(() => dataStore.getDegreeData())
 
 const updateOption = (degreeData) => {
-  console.log(degreeData)
   return {
     title: {
       text: 'Degree Distribution',

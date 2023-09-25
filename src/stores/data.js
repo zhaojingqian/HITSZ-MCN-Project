@@ -78,8 +78,6 @@ export const useDataStore = defineStore('data', () => {
     featureData.value = data
   }
   const getFeatureData = () => {
-    console.log('getFeatureData')
-    console.log(featureData.value)
     return featureData.value
   }
 
@@ -88,7 +86,6 @@ export const useDataStore = defineStore('data', () => {
   // const corenessData = computed(() => { return getFeatureData().coreness })
   // const triangleData = computed(() => { return getFeatureData().triangle })
   const getDegreeData = () => { 
-    console.log('getDegreeData')
     return getFeatureData().degree 
   }
   const getCorenessData = () => { 
@@ -97,6 +94,9 @@ export const useDataStore = defineStore('data', () => {
   const getTriangleData = () => { 
     return getFeatureData().triangle 
   }
+  const getShortestPathData = () => {
+    return getFeatureData().shortest_path
+  }
 
   return {
     dataPath,
@@ -104,6 +104,7 @@ export const useDataStore = defineStore('data', () => {
     dataJson,
     optionParams,
     dataList,
+    featureData,
 
     setDataPath,
     getDataPath,
@@ -125,6 +126,7 @@ export const useDataStore = defineStore('data', () => {
 
     getDegreeData,
     getCorenessData,
-    getTriangleData
+    getTriangleData,
+    getShortestPathData
   }
 })

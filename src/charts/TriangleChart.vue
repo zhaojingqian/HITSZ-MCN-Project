@@ -22,7 +22,7 @@ const triangleData = computed(() => dataStore.getTriangleData())
 const updateOption = (triangleData) => {
   return {
     title: {
-      text: ' Corness Distribution',
+      text: 'Triangle Distribution',
       left: 'center',
       top: '5px'
     },
