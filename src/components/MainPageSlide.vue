@@ -9,6 +9,9 @@
     <el-carousel-item class="mainpage_box">
       <TriangleChart />
     </el-carousel-item>
+    <el-carousel-item class="mainpage_box">
+      <ShortestPathChart />
+    </el-carousel-item>
   </el-carousel>
 </template>
 
@@ -17,6 +20,7 @@ import { computed } from 'vue'
 import degreeChart from '../charts/DegreeChart.vue'
 import corenessChart from '../charts/CorenessChart.vue'
 import TriangleChart from '../charts/TriangleChart.vue'
+import ShortestPathChart from '../charts/ShortestPathChart.vue'
 
 import { useDataStore } from '../stores/data.js'
 const dataStore = useDataStore()

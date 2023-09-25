@@ -1,6 +1,6 @@
 <template>
     <v-chart
-      class="triangle_chart"
+      class="shortest_path_chart"
       :option="updateOption(shortestPathData)"
       autoresize
     />
@@ -22,7 +22,7 @@
   const updateOption = (shortestPathData) => {
     return {
       title: {
-        text: 'Triangle Distribution',
+        text: 'ShortestPath Distribution',
         left: 'center',
         top: '5px'
       },
@@ -32,10 +32,10 @@
       },
       xAxis: {
         type: 'category',
-        name: 'Triangle',
+        name: 'ShortestPath',
         nameLocation: 'middle',
         nameGap: 30,
-        data: shortestPathData.triangle
+        data: shortestPathData.shortest_path
       },
       yAxis: {
         type: 'value',
@@ -45,7 +45,7 @@
       },
       series: [
         {
-          name: 'Triangle',
+          name: 'ShortestPath',
           type: 'bar',
           data: shortestPathData.count
         }

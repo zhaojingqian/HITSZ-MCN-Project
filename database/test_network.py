@@ -1,7 +1,7 @@
 import networkx as nx
 from collections import Counter
 
-graph = nx.read_edgelist('/home/zjq/CNModelProject/database/data/cora_data.txt', delimiter=' ', nodetype=int)
+graph = nx.read_edgelist('/home/zhaojingqian/CNModelProject/database/data/cora_data.txt', delimiter=' ', nodetype=int)
 degrees = dict(graph.degree())
 # Count the occurrences of each degree
 degree_counts = Counter(degrees.values())
