@@ -71,8 +71,18 @@ def cal_degree():
     data_name = request.args.get('data_name')
     data_path = os.path.join(ROOT_PATH, data_name + '.txt')
     graph = nx.read_edgelist(data_path, delimiter=' ', nodetype=int)
+    graph.remove_edges_from(nx.selfloop_edges(graph))
     
     features_set = {}
+
+    # 对于大图（节点大于1000）进行下采样，按照degree降序采样1000个
+    if len(graph.nodes()) > 1000:
+        degrees = dict(graph.degree())
+        sorted_degrees = sorted(degrees.items(), key=lambda x: x[1], reverse=True)
+        nodes_list = []
+        for i in range(1000):
+            nodes_list.append(sorted_degrees[i][0])
+        subgraph = graph.subgraph(nodes_list)
     
     # 计算degree
     degrees = dict(graph.degree())
@@ -111,6 +121,9 @@ def cal_degree():
     features_set['triangle'] = integrated_dict
 
     # 计算所有节点的最短路径
+    if len(graph.nodes()) > 1000:
+        graph = subgraph
+
     shortest_path = dict(nx.all_pairs_shortest_path_length(graph))
     shortest_path_list = []
     for key in shortest_path.keys():
@@ -127,9 +140,20 @@ def cal_degree():
         'count': counts_list
     }
     features_set['shortest_path'] = integrated_dict
+    
+    # 计算 clustering coefficient
+    clustering_coefficient = nx.clustering(graph)
+    clustering_coefficient_counts = Counter(clustering_coefficient.values())
+    sorted_clustering_coefficient_counts = dict(sorted(clustering_coefficient_counts.items()))
+    clustering_coefficient_list = list(sorted_clustering_coefficient_counts.keys())
+    counts_list = list(sorted_clustering_coefficient_counts.values())
+    integrated_dict = {
+        'clustering_coefficient': clustering_coefficient_list,
+        'count': counts_list
+    }
+    features_set['clustering_coefficient'] = integrated_dict
     print(features_set)
     return features_set
-    
 
 if __name__ == '__main__':
     app.run(port=8280, debug=True)

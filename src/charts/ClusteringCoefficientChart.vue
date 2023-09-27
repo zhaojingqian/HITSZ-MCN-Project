@@ -1,7 +1,7 @@
 <template>
     <v-chart
-      class="shortest_path_chart"
-      :option="updateOption(shortestPathData)"
+      class="clustering_coefficient_chart"
+      :option="updateOption(clusteringCoefficientData)"
       autoresize
     />
   </template>
@@ -17,13 +17,13 @@
   use([TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer])
   
   const dataStore = useDataStore()
-  const shortestPathData = computed(() => dataStore.getShortestPathData())
+  const clusteringCoefficientData = computed(() => dataStore.getClusteringCoefficientData())
   
-  const updateOption = (shortestPathData) => {
-    console.log(shortestPathData)
+  const updateOption = (clusteringCoefficientData) => {
+    console.log(clusteringCoefficientData)
     return {
       title: {
-        text: 'Shortest Path Distribution',
+        text: 'Clustering Coefficient Distribution',
         left: 'center',
         top: '5px'
       },
@@ -33,10 +33,10 @@
       },
       xAxis: {
         type: 'category',
-        name: 'Shortest Path',
+        name: 'Clustering Coefficient',
         nameLocation: 'middle',
         nameGap: 30,
-        data: shortestPathData.shortest_path
+        data: clusteringCoefficientData.clustering_coefficient
       },
       yAxis: {
         type: 'value',
@@ -46,9 +46,9 @@
       },
       series: [
         {
-          name: 'Shortest Path',
+          name: 'Clustering Coefficient',
           type: 'bar',
-          data: shortestPathData.count
+          data: clusteringCoefficientData.count
         }
       ]
     }

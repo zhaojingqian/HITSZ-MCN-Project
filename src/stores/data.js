@@ -72,7 +72,9 @@ export const useDataStore = defineStore('data', () => {
   const featureData = ref({
     degree: {},
     coreness: {},
-    triangle: {}
+    triangle: {},
+    shortest_path: {},
+    clustering_coefficient: {},
   })
   const setFeatureData = (data) => {
     featureData.value = data
@@ -81,10 +83,6 @@ export const useDataStore = defineStore('data', () => {
     return featureData.value
   }
 
-  //
-  // const degreeData = computed(() => { return getFeatureData().degree })
-  // const corenessData = computed(() => { return getFeatureData().coreness })
-  // const triangleData = computed(() => { return getFeatureData().triangle })
   const getDegreeData = () => { 
     return getFeatureData().degree 
   }
@@ -97,7 +95,9 @@ export const useDataStore = defineStore('data', () => {
   const getShortestPathData = () => {
     return getFeatureData().shortest_path
   }
-
+  const getClusteringCoefficientData = () => {
+    return getFeatureData().clustering_coefficient
+  }
   return {
     dataPath,
     currentData,
@@ -127,6 +127,7 @@ export const useDataStore = defineStore('data', () => {
     getDegreeData,
     getCorenessData,
     getTriangleData,
-    getShortestPathData
+    getShortestPathData,
+    getClusteringCoefficientData,
   }
 })
