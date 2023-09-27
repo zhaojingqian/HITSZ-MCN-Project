@@ -80,7 +80,7 @@ def cal_degree():
         degrees = dict(graph.degree())
         sorted_degrees = sorted(degrees.items(), key=lambda x: x[1], reverse=True)
         nodes_list = []
-        for i in range(1000):
+        for i in range(400):
             nodes_list.append(sorted_degrees[i][0])
         subgraph = graph.subgraph(nodes_list)
     
@@ -146,11 +146,15 @@ def cal_degree():
     clustering_coefficient_counts = Counter(clustering_coefficient.values())
     sorted_clustering_coefficient_counts = dict(sorted(clustering_coefficient_counts.items()))
     clustering_coefficient_list = list(sorted_clustering_coefficient_counts.keys())
+    clustering_coefficient_list = [round(x, 3) for x in clustering_coefficient_list]
     counts_list = list(sorted_clustering_coefficient_counts.values())
     integrated_dict = {
         'clustering_coefficient': clustering_coefficient_list,
         'count': counts_list
     }
+    # 去除key为0的项
+    integrated_dict['clustering_coefficient'] = integrated_dict['clustering_coefficient'][1:]
+    integrated_dict['count'] = integrated_dict['count'][1:]
     features_set['clustering_coefficient'] = integrated_dict
     print(features_set)
     return features_set

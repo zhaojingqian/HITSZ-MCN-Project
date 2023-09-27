@@ -17,7 +17,7 @@ const dataStore = useDataStore()
 const switchGraphLayout = () => {
   const oldOptionParam = dataStore.getOptionParams()
   if (oldOptionParam.layout === 'force') {
-    dataStore.setOptionParams({ layout: 'circular', curveness: 0.3, symbolSize: 5 })
+    dataStore.setOptionParams({ layout: 'circular', curveness: 0.3, symbolSize: 15 })
   } else {
     dataStore.setOptionParams({ layout: 'force', curveness: 0, symbolSize: 10 })
   }

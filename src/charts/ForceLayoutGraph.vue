@@ -1,10 +1,5 @@
 <template>
-  <v-chart
-    class="force_layout_graph"
-    :option="updateOption(dataJson)"
-    v-show="!isEmpty(dataJson)"
-    autoresize
-  />
+  <v-chart class="force_layout_graph" :option="updateOption(dataJson)" v-show="!isEmpty(dataJson)" autoresize />
 </template>
 
 <script setup>
@@ -53,6 +48,10 @@ const updateOption = (dataJson) => {
         lineStyle: {
           color: 'source',
           curveness: optionParams.value.curveness
+        },
+        emphasis: {
+          focus: 'adjacency',
+          scale: 1.5,
         },
         roam: true,
         force: {

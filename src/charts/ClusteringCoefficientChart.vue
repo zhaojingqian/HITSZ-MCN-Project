@@ -20,7 +20,6 @@
   const clusteringCoefficientData = computed(() => dataStore.getClusteringCoefficientData())
   
   const updateOption = (clusteringCoefficientData) => {
-    console.log(clusteringCoefficientData)
     return {
       title: {
         text: 'Clustering Coefficient Distribution',
