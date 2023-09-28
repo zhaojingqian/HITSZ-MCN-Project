@@ -51,6 +51,10 @@ def save_file():
     
     # data process
     pre_data = readJson(os.path.join(ROOT_PATH, file_name))
+    print(pre_data.keys())
+    if 'links' not in pre_data or 'nodes' not in pre_data:
+        print('error')
+        raise ValueError
     try:
         graph = []
         edges_list = pre_data['links']
@@ -160,4 +164,4 @@ def cal_degree():
     return features_set
 
 if __name__ == '__main__':
-    app.run(port=8280, debug=True)
+    app.run(host='0.0.0.0', port=8280, debug=True)

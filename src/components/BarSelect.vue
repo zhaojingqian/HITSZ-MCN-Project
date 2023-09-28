@@ -36,7 +36,7 @@ const passDataJson = async (data_path) => {
 
 const getChartInfo = async () => {
   await axios
-    .get('http://127.0.0.1:8280/algorithm', {
+    .get('http://10.249.46.195:8280/algorithm', {
       params: {
         data_name: dataStore.getCurrentData()
       }

@@ -24,7 +24,7 @@ const handleSelect = (index) => {
 
 const testPing = async () => {
   await axios
-    .get('http://127.0.0.1:8280/test')
+    .get('http://10.249.46.195:8280/test')
     .then((res) => {
       console.log(res.data)
     })

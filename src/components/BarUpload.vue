@@ -2,7 +2,7 @@
   <el-upload
     v-model:file-list="fileList"
     class="bar_upload"
-    action="http://127.0.0.1:8280/upload"
+    action="http://10.249.46.195:8280/upload"
     method="post"
     accept=".json"
     :show-file-list="false"

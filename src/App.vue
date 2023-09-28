@@ -28,7 +28,7 @@ const dataStore = useDataStore()
 
 const getInitDataList = async () => {
   await axios
-    .get('http://127.0.0.1:8280/get_data_list')
+    .get('http://10.249.46.195:8280/get_data_list')
     .then((res) => {
       dataStore.resetDataList(res.data)
     })
